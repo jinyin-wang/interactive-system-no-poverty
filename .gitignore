@@ -1,0 +1,9 @@
+target/
+.idea
+.idea/
+.idea/vcs.xml
+*.iml
+.DS_Store
+.classpath
+.project
+.settings

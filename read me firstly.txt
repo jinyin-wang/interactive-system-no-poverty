@@ -1,0 +1,37 @@
+This is an interactive system for visualizing the data by using Springboot+Mybatis framework.
+
+Now let me introduce it and you can get in to a specific file to read the comments of each function.
+
+The Controller has two files, BDController and DBController. The BDController has two functions, 
+1. queryAllCounty¡ªmainly provides information for the main front page, 
+2.queryACounty¡ªget the info of One specific county for the second page. DBController is related 
+to saving records from csv files ( after spark, linear calculations and etc. )to databases for query.
+
+The mapper package has two files. BfPredictMapper.class is an interface of BfPredictMapper.xml
+ of the package of resources.mapper. When using the Springboot framework, we could just use the
+ function of this mapper to search, delete, add records and etc.
+
+The package named model.dto has 5 class¡ª3 of them are entities (I send entities to the front-page), 
+and two of them named xxExample are templates for the framework.
+
+The package service has two files, one interface named BDService and another Implementation of this 
+interface called BDserviceImpl, which is a bridge between the controllers and the mappers.
+
+The file named Application is the main function of this system.
+
+The package recourses includes some css, js, html, xml files, the mapper provides SQLs, 
+static is those css and javascript files. The templates has the htmls for the frontpage.
+
+For javascript files, the drawGraph.js and autoGraphForMainPage.js are two files written by me, 
+others are download from some libraries. As the name shows, those two files are related to draw the graphs.
+
+application.yml is the properties of this system, including the database info, the framework info and etc.
+
+mybatis-generator-config is a very important part for the framework, to generate SQL code according 
+to my requirements.
+
+logback-spring.xml and mybatis-config.xml are non-related to our final assignments.
+
+
+Databases:
+I put the 2 tables with the code.

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 常量定义start -->
+    <!-- 默认日志输出格式 -->
+    <contextName>openapi-platform</contextName>
+    <property name="DEFAULT_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS}$$%contextName{}$$%-5level{}$$%file{}/%line{}$$openapi-platform$$%msg%n" />
+    <property name="MAX_HISTORY" value="30" />
+    <property name="ASYNC_QUEUE_SIZE" value="1024" />
+    <!-- 常量定义end -->
+ 
+    <!-- 默认日志的console appender，本地使用的日志 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger{50}) - %yellow([%file:%line]) - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <springProfile name="local,dohko,prod">
+        <!-- 服务器上使用的appender start -->
+        <!-- 默认的file appender，按天切分日志 -->
+        <appender name="ROLLING_FILE_DEFAULT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>/home/logs/openapi-platform/${HOSTNAME}_application.log</file>
+            <append>true</append>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>/home/logs/openapi-platform/${HOSTNAME}_application.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <maxHistory>${MAX_HISTORY}</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>${DEFAULT_PATTERN}</pattern>
+                <charset>UTF-8</charset>
+            </encoder>
+        </appender>
+
+        <!-- 错误日志，按天切分 -->
+        <appender name="ROLLING_FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <file>/home/logs/openapi-platform/${HOSTNAME}_application_error.log</file>
+            <append>true</append>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>/home/logs/openapi-platform/${HOSTNAME}_application_error.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <maxHistory>${MAX_HISTORY}</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>${DEFAULT_PATTERN}</pattern>
+                <charset>UTF-8</charset>
+            </encoder>
+        </appender>
+    </springProfile>
+
+    <logger name="com.hualala.grpc.logging" level="OFF" />
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <springProfile name="local,dohko,prod">
+            <appender-ref ref="ROLLING_FILE_DEFAULT" />
+            <appender-ref ref="ROLLING_FILE_ERROR" />
+        </springProfile>
+    </root>
+
+</configuration>

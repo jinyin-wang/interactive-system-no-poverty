@@ -1,0 +1,201 @@
+spring:
+  profiles.active: local
+
+---
+
+spring:
+  profiles: local
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    mode: HTML5
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: true
+  datasource:
+#    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_openapi?useUnicode=true&characterEncoding=utf8&autoReconnectForPools=true
+#    username: root
+#    password: hualaladev
+    url: jdbc:mysql://127.0.0.1:3306/mysql?useUnicode=true&characterEncoding=utf8&autoReconnectForPools=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    initial-size: 3
+    max-active: 20
+    min-idle: 1
+    max-idle: 10
+    max-wait: 10000
+    test-on-borrow: false
+    test-while-idle: true
+    validation-query: SELECT 1
+    time-between-eviction-runs-millis: 18800
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 1000
+    pool:
+      max-active: 150
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+
+endpoints:
+  enabled: true
+  info.sensitive: false
+  health.sensitive: false
+
+management:
+  context-path: /
+  port: 8099
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.hualala.openapiPlatform.model.dto
+
+server:
+  port: 8099
+
+core:
+  zipkin:
+    url: 172.16.1.145:9092
+    serviceName: openapi-platform
+    traceSampler: 1.0
+    enable: true
+    sender: kafka
+
+---
+
+spring:
+  profiles: dohko
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    mode: HTML5
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: true
+  datasource:
+    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_openapi?useUnicode=true&characterEncoding=utf8&autoReconnectForPools=true
+    username: root
+    password: hualaladev
+    driver-class-name: com.mysql.jdbc.Driver
+    initial-size: 3
+    max-active: 20
+    min-idle: 1
+    max-idle: 10
+    max-wait: 10000
+    test-on-borrow: false
+    test-while-idle: true
+    validation-query: SELECT 1
+    time-between-eviction-runs-millis: 18800
+
+  redis:
+    host: 172.16.32.87
+    port: 6379
+    timeout: 3000
+    pool:
+      max-active: 200
+      max-wait: -10000
+      max-idle: 100
+      min-idle: 5
+
+jedis:
+  pool:
+    host: 172.16.32.87
+    port: 6379
+    config:
+      maxTotal: 100
+      maxIdle: 10
+      maxWaitMillis: 100000
+
+endpoints:
+  enabled: true
+  info.sensitive: false
+  health.sensitive: false
+
+management:
+  context-path: /
+  port: 8099
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.hualala.openapiPlatform.model.dto
+
+server:
+  port: 8099
+
+core:
+  zipkin:
+    url: 172.16.1.145:9092
+    serviceName: openapi-platform
+    traceSampler: 1.0
+    enable: true
+    sender: kafka
+
+---
+
+spring:
+  profiles: prod
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    mode: HTML5
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: true
+  datasource:
+    url: jdbc:mysql://mysql.mendianbao.001.master.hualala.com:6330/db_openapi?autoReconnect=true&amp;autoReconnectForPools=true&amp;failOverReadOnly=false
+    username: openapi
+    password: openapi@online
+    driver-class-name: com.mysql.jdbc.Driver
+    initial-size: 3
+    max-active: 20
+    min-idle: 1
+    validation-query: SELECT 1
+    test-on-borrow: false
+    test-while-idle: true
+    time-between-eviction-runs-millis: 300000
+    min-evictable-idle-time-millis: 3600000
+  redis:
+    host: redis1.api.hualala.com
+    port: 6379
+    database: 5
+    timeout: 1000
+    pool:
+      max-active: 200
+      max-wait: -10000
+      max-idle: 100
+      min-idle: 5
+
+endpoints:
+  enabled: true
+  info.sensitive: false
+  health.sensitive: false
+
+management:
+  context-path: /
+  port: 8099
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.hualala.openapiPlatform.model.dto
+
+core:
+  zipkin:
+    url: 192.168.22.193:9092,192.168.22.196:9092,192.168.22.197:9092
+    serviceName: open-api
+    traceSampler: 1.0
+    enable: true
+    sender: kafka
+
+server:
+  port: 8099
