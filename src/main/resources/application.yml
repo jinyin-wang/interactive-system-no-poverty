@@ -15,9 +15,7 @@ spring:
   resources:
     add-mappings: true
   datasource:
-#    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_openapi?useUnicode=true&characterEncoding=utf8&autoReconnectForPools=true
-#    username: root
-#    password: hualaladev
+
     url: jdbc:mysql://127.0.0.1:3306/mysql?useUnicode=true&characterEncoding=utf8&autoReconnectForPools=true
     username: root
     password: root
@@ -60,8 +58,6 @@ server:
 
 core:
   zipkin:
-    url: 172.16.1.145:9092
-    serviceName: openapi-platform
     traceSampler: 1.0
     enable: true
     sender: kafka
@@ -69,7 +65,7 @@ core:
 ---
 
 spring:
-  profiles: dohko
+  profiles: 
 
   thymeleaf:
     prefix: classpath:/templates/
@@ -80,9 +76,6 @@ spring:
   resources:
     add-mappings: true
   datasource:
-    url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_openapi?useUnicode=true&characterEncoding=utf8&autoReconnectForPools=true
-    username: root
-    password: hualaladev
     driver-class-name: com.mysql.jdbc.Driver
     initial-size: 3
     max-active: 20
@@ -106,7 +99,6 @@ spring:
 
 jedis:
   pool:
-    host: 172.16.32.87
     port: 6379
     config:
       maxTotal: 100
@@ -132,8 +124,7 @@ server:
 
 core:
   zipkin:
-    url: 172.16.1.145:9092
-    serviceName: openapi-platform
+    serviceName: -platform
     traceSampler: 1.0
     enable: true
     sender: kafka
@@ -152,9 +143,8 @@ spring:
   resources:
     add-mappings: true
   datasource:
-    url: jdbc:mysql://mysql.mendianbao.001.master.hualala.com:6330/db_openapi?autoReconnect=true&amp;autoReconnectForPools=true&amp;failOverReadOnly=false
-    username: openapi
-    password: openapi@online
+    username: 
+    password: @online
     driver-class-name: com.mysql.jdbc.Driver
     initial-size: 3
     max-active: 20
@@ -191,7 +181,6 @@ mybatis:
 
 core:
   zipkin:
-    url: 192.168.22.193:9092,192.168.22.196:9092,192.168.22.197:9092
     serviceName: open-api
     traceSampler: 1.0
     enable: true
